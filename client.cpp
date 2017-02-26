@@ -12,7 +12,7 @@
 int _cdecl main(int argc, char *argv[])
 {
     // Parte 1 - Montando o ambiente cliente
-    // Testando se o us˙ario digitou o ip do server
+    // Testando se o us√∫ario digitou o ip do server
     if(argc < 2)
     {
         printf("Uso: %s <ip_server>\n", argv[0]);
@@ -28,18 +28,18 @@ int _cdecl main(int argc, char *argv[])
         return -1;
     }
 
-    // Inicializando valores struct sockaddr atravÈs de addrinfo
+    // Inicializando valores struct sockaddr atrav√©s de addrinfo
     struct addrinfo *result = NULL, *ptr = NULL, hints;
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
 
-    /*   Call the getaddrinfo function requesting the IP address - chama a funÁ„o requesitando o endereÁo de ip
+    /*   Call the getaddrinfo function requesting the IP address - chama a fun√ß√£o requesitando o endere√ßo de ip
      *   for the server name passed on the command line. The TCP port - para o nome do servidor passado pela linha de comando. A porta TCP
-     *   on the server that the client will connect to is defined by - do servidor que o cliente conectar· È definido por
-     *   DEFAULT_PORT as 27015 in this sample. The getaddrinfo function - DEFAULT_PORT como 27015 nesse exemple. A funÁao
-     *   returns its value as an integer that is checked for errors. - retorna valor como inteiro que È para checar erros
+     *   on the server that the client will connect to is defined by - do servidor que o cliente conectar√° √© definido por
+     *   DEFAULT_PORT as 27015 in this sample. The getaddrinfo function - DEFAULT_PORT como 27015 nesse exemple. A fun√ßao
+     *   returns its value as an integer that is checked for errors. - retorna valor como inteiro que √© para checar erros
      */
     iResult = getaddrinfo(argv[1], DEFAULT_PORT, &hints, &result);
     if(iResult)
@@ -52,24 +52,24 @@ int _cdecl main(int argc, char *argv[])
     // creando socket objeto
     SOCKET ConnectSocket = INVALID_SOCKET;
 
-    /* Call the socket function and return its value to the ConnectSocket variable. - Chama a funÁ„o socket e para a variavel
-    For this application, use the first IP address returned by the call to - nessa aplicaÁ„o, usa o primeiro ip returnad pela chamada por
-    getaddrinfo that matched the address family, socket type, and protocol specified - getaddrinfo que combina o endereÁo familia e protocolo especificado
+    /* Call the socket function and return its value to the ConnectSocket variable. - Chama a fun√ß√£o socket e para a variavel
+    For this application, use the first IP address returned by the call to - nessa aplica√ß√£o, usa o primeiro ip returnad pela chamada por
+    getaddrinfo that matched the address family, socket type, and protocol specified - getaddrinfo que combina o endere√ßo familia e protocolo especificado
     in the hints parameter. In this example, a TCP stream socket was specified with - em hints. nesse examplo, um stream TCP foi especializado com
-    a socket type of SOCK_STREAM and a protocol of IPPROTO_TCP. The address family - um socket do tipo SOCK_STREAM e um protocolo de IPROTO_TCP. A familia do endereÁo
-    was left unspecified (AF_UNSPEC), so the returned IP address could be either - ?, ent„o returnou ip address poderia ser outros.
+    a socket type of SOCK_STREAM and a protocol of IPPROTO_TCP. The address family - um socket do tipo SOCK_STREAM e um protocolo de IPROTO_TCP. A familia do endere√ßo
+    was left unspecified (AF_UNSPEC), so the returned IP address could be either - ?, ent√£o returnou ip address poderia ser outros.
     an IPv6 or IPv4 address for the server. If the client application wants to
     connect using only IPv6 or IPv4, then the address family needs to be set to
     AF_INET6 for IPv6 or AF_INET for IPv4 in the hints parameter.
      */
 
-    /* Tentado conectar a lista de endereÁos das especificaÁıes getaddrinfo */
+    /* Tentado conectar a lista de endere√ßos das especifica√ß√µes getaddrinfo */
     for(ptr = result; ptr != NULL; ptr = ptr->ai_next)
     {
         // Creando socket para conectar ao servidor
         ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
 
-        // testando se o socket È v·lido
+        // testando se o socket √© v√°lido
         if(ConnectSocket == INVALID_SOCKET)
         {
             printf("Socket error\n");
@@ -77,7 +77,7 @@ int _cdecl main(int argc, char *argv[])
             return -1;
         }
         // Parte 2 - conectando servidor
-        // Call the connect function, passing the created socket and the sockaddr structure as parameters - chama a funÁ„o connect, passando o socket criado a estrutura sockaddr
+        // Call the connect function, passing the created socket and the sockaddr structure as parameters - chama a fun√ß√£o connect, passando o socket criado a estrutura sockaddr
         iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen); // socket, estrutura sockaddr, tamanho da estrutura
         if(iResult == SOCKET_ERROR)
         {
@@ -88,10 +88,10 @@ int _cdecl main(int argc, char *argv[])
         break;
     }
 
-    // Should really try the next address returned by getaddrinfo - devemos realmente tentar o proximo endereÁo retornado pela funÁ„o
+    // Should really try the next address returned by getaddrinfo - devemos realmente tentar o proximo endere√ßo retornado pela fun√ß√£o
     // if the connect call failed - se a connect falhou
     // But for this simple example we just free the resources - mas para esse ecemplo simples nos somente limpamos os resources
-    // returned by getaddrinfo and print an error message - retornado pela funÁ„o e printar uma menssagem de erro
+    // returned by getaddrinfo and print an error message - retornado pela fun√ß√£o e printar uma menssagem de erro
     freeaddrinfo(result);
     if(ConnectSocket == INVALID_SOCKET)
     {
@@ -119,7 +119,7 @@ int _cdecl main(int argc, char *argv[])
 
     printf("Bytes enviando: %s\n", sendbuf);
 
-    // shutdown the connection for sending since no more data will be sent - Encerrar a conex„o para o envio, pois n„o ser„o enviados mais dados
+    // shutdown the connection for sending since no more data will be sent - Encerrar a conex√£o para o envio, pois n√£o ser√£o enviados mais dados
     // the client can still use the ConnectSocket for receiving data - do cliente pode ainda usar o ConnectScoekt para receber dados
     iResult = shutdown(ConnectSocket, SD_RECEIVE);
     if(iResult == SOCKET_ERROR)
