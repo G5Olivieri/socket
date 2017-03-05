@@ -1,8 +1,10 @@
-LIB=-lpthread -pthread -Wl,--no-as-need
+LIB=-libpthread.a -Wl,--no-as-need -std=c++11
 
-all: thread
+all: ppm.exe
 
-thread: thread.o
-	g++ -o thread thread.o $(LIB)
-thread.o: thread.cpp
-	g++ -c thread.cpp
+ppm.exe: ppm.o ppm_01.o
+	g++ -o ppm.exe ppm.o ppm_01.o $(LIB)
+ppm.o: ppm.cpp
+	g++ -c ppm.cpp
+ppm_01.o: ppm.cpp
+	g++ -c ppm_01.cpp

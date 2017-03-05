@@ -11,7 +11,7 @@ class ppm
  public:
   // arrays para RGB valores
   std::vector<unsigned char> r;
-  std::vector<unsigned char> b;
+  std::vector<unsigned char> g;
   std::vector<unsigned char> b;
 
   

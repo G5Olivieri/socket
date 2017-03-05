@@ -80,11 +80,11 @@ void ppm::read(const std::string &fname)
       for(unsigned int i = 0; i < size; i++)
 	{
 	  inp.read(&aux, 1);
-	  r[i] = (unsined char) aux;
+	  r[i] = (unsigned char) aux;
 	  inp.read(&aux, 1);
-	  g[i] = (unsined char) aux;
+	  g[i] = (unsigned char) aux;
 	  inp.read(&aux, 1);
-	  b[i] = (unsined char) aux;
+	  b[i] = (unsigned char) aux;
 	}
     } else {
     std::cout << "Error. Unable to open " << fname << std::endl;
