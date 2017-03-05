@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <thread>
+#include <ctime>
+#include "ppm.h"
+
+std::vector<int> bounds(int parts, int mem)
+{
+  std::vector<int> bnd;
+  int delta = mem / parts;
+  int reminder = mem % parts;
+  int N1 = 0;
+  int N2 = 0;
+  bnd.push_back(N1);
+  for(int i = 0; i < parts; ++i)
+    {
+      N2 = N1 + delta;
+      if(i == parts - 1)
+	N2 += reminder;
+      bnd.push_back(N2);
+      N1 = N2;
+    }
+  return bnd;
+}
+
+bool border(int ii, int jj, int nr_lines, int nr_columns)
+{
+  if(ii >= 0 && ii < nr_lines && jj >= 0 && jj < nr_columns)
+    return true;
+  else
+    return false;
+}
+
+void process(ppm &image, ppm &image2, int i, int j)
+{
+  int ii;
+  int jj;
+  int nr_lines;
+  int nr_columns;
+  int indx;
+  float r_sum;
+  float g_sum;
+  float b_sum;
+
+  float filter[] = {
+    0.10179640718562874, 0.11377245508982035, 0.10179640718562874,
+    0.11377245508982035, 0.1377245508982036, 0.11377245508982035,
+    0.10179640718562874, 0.11377245508982035, 0.10179640718562874
+  };
+
+  nr_lines = image.height;
+  nr_columns = image.widght;
+  r_sum = 0;
+  g_sum = 0;
+  b_sum = 0;
+
+  ii = i - 1;
+  jj = j - 1;
+  if(border(ii, jj, nr_lines, nr_columns))
+    {
+      indx = ii * image.width + jj;
+    }
