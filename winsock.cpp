@@ -5,30 +5,46 @@
 #include <ws2tcpip.h>
 #include <ctype.h>
 
-void help(char*);
+void help(int, char**);
 void error(char*);
 void setupConnection();
 void closeConnection();
 hostent *checkAnddress(char*);
 SOCKET getConnection(char*);
-
+int sorc(char*);
 WSADATA wsadata;
 
 int main(int argc, char *argv[])
 {
-    if(argc != 2) help(argv[0]);
+    //help(argc, argv);
     setupConnection();
-
+    checkAnddress("yahoo.com");
     closeConnection();
     return 0;
 }
 
-void help(char *str)
+int sorc(char *str)
 {
-    printf("uso: %s ipv4anddress", str);
-    printf(" or");
-    printf(" %s hostname\n", str);
-    exit(1);
+    if(!strcmp(str, "-c")) return 0;
+    if(!strcmp(str, "-s")) return 1;
+    return -1;
+}
+
+void help(int argc, char *argv[])
+{
+    printf("\n%d\n", argc);
+    if(argc < 3)
+    {
+        printf("\nuso: %s -c <hostname> <porta>\n", argv[0]);
+        printf("\nuso: %s -s <porta>\n", argv[0]);
+        exit(0);
+    }
+    switch(sorc(argv[1]))
+    {
+    case 1:
+
+        break;
+    }
 }
 
 void setupConnection()
@@ -50,9 +66,9 @@ void error(char *msg)
     exit(1);
 }
 
-SOCKET getConnection(char *host)
+SOCKET getConnection(char *hostname)
 {
-    hostent *host = checkAnddress(argv[1]);
+    struct hostent *host = checkAnddress(hostname);
     if(host == NULL)
     {
         error("host null");
